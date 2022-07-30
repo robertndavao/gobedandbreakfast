@@ -1,11 +1,11 @@
 package main
 
 import (
-	"bookings-udemy/pkg/config"
-	"bookings-udemy/pkg/handlers"
-	"bookings-udemy/pkg/render"
 	"fmt"
 	"github.com/alexedwards/scs/v2"
+	"github.com/tsawler/bookings-app/internal/config"
+	"github.com/tsawler/bookings-app/internal/handlers"
+	"github.com/tsawler/bookings-app/internal/render"
 	"log"
 	"net/http"
 	"time"
@@ -14,18 +14,17 @@ import (
 const portNumber = ":8080"
 
 var app config.AppConfig
-
 var session *scs.SessionManager
 
 // main is the main function
 func main() {
-
 	// change this to true when in production
 	app.InProduction = false
 
+	// set up the session
 	session = scs.New()
-	session.Lifetime = 24 * time.Minute
-	session.Cookie.Persist = false
+	session.Lifetime = 24 * time.Hour
+	session.Cookie.Persist = true
 	session.Cookie.SameSite = http.SameSiteLaxMode
 	session.Cookie.Secure = app.InProduction
 
